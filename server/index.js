@@ -1,18 +1,12 @@
 import "dotenv/config";
-import express from "express";
-import mongoose from "mongoose";
+import app from "./app.js";
+import connectDB from "./config/db.js";
 
-const app = express();
 const PORT = process.env.PORT || 5000;
-
-app.get("/api/health", (request, response) => {
-  response.json({ status: "ok" });
-});
 
 async function start() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Connected to MongoDB");
+    await connectDB();
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
     });
